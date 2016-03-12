@@ -1,0 +1,52 @@
+#!/usr/bin/ruby
+# Generate a random string of letters and numbers of the given length
+#
+#   $ rb-random 128
+class RbRandom
+  def initialize(options = {})
+    @length = (options[:return_length] || ShellArgumentLength.new).length
+    @characters = (options[:character_list] || DefaultCharacterList.new).characters
+  end
+
+  def randomize
+    (0...length).map { characters.sample }.join
+  end
+
+  private
+
+  attr_reader :characters, :length
+
+  ###
+  # The default way of getting the length
+  class ShellArgumentLength
+    def length
+      ARGV.first.to_i
+    end
+  end
+
+  ###
+  # Default alpha and numeric characters
+  class DefaultCharacterList
+    def characters
+      [('a'..'z'), ('A'..'Z'), (0..9)].flat_map(&:to_a)
+    end
+  end
+
+  ##
+  # Alpha only characters
+  class AlphaCharacterList
+    def characters
+      [('a'..'z'), ('A'..'Z')].flat_map(&:to_a)
+    end
+  end
+
+  ##
+  # Numeric only characters
+  class NumericCharacterList
+    def characters
+      (0..9).to_a
+    end
+  end
+end
+
+puts RbRandom.new.randomize
