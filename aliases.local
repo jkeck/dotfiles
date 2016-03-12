@@ -1,0 +1,3 @@
+alias workbench="cd ~/Projects"
+alias be="bundle exec"
+alias ber="bundle exec rake"
