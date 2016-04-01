@@ -46,7 +46,8 @@ ZSH_THEME="robbyrussell"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Allow bundler plugin (added below) to wrap the following commands with  bundle exec
-BUNDLED_COMMANDS=(rubocop)
+# Keeping rubocop commented out until I have more project coverage
+# BUNDLED_COMMANDS=(rubocop)
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
