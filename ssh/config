@@ -1,0 +1,4 @@
+Host corn cardinal *.stanford.edu
+ GSSAPIAuthentication yes
+ GSSAPIDelegateCredentials yes
+ GSSAPITrustDns yes
