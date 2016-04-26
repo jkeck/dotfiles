@@ -3,6 +3,7 @@
   bm = branch --merged
   cam = commit --amend
   pp = pull --prune
+  pot = push -u origin
   fp = fetch --prune
   ri = rebase -i
   rim = rebase -i master
