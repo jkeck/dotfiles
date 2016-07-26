@@ -1,0 +1,66 @@
+#!/usr/bin/ruby
+# Loop through all (non-master) merged branches and offer the option to delete
+#
+#   $ git-pbs
+class GitPBS
+  def initialize
+    if omit_branches.empty?
+      puts 'No merged branches to delete!'
+    else
+      check_master_branch
+      omit_branches.each do |branch|
+        ask_to_delete_branch(branch)
+      end
+    end
+  end
+
+  private
+
+  def check_master_branch
+    return if on_master_branch?
+    unless ask('WARNING: You are not currently on the master branch, would you like to continue?')
+      raise ArgumentError, 'Requested to stop due to the fact that you are not on the master branch'
+    end
+  end
+
+  def on_master_branch?
+    current_branch == 'master'
+  end
+
+  def ask_to_delete_branch(branch)
+    if ask("Would you like to delete #{branch}?")
+      puts "Deleting branch #{branch}"
+      `git branch -d #{branch}`
+    else
+      puts "NOT deleting #{branch}"
+    end
+  end
+
+  def merged_branches
+    @merged_branches ||= `git bm`.split("\n").map(&:strip)
+  end
+
+  def omit_branches
+    merged_branches.reject do |branch|
+      branch.match(/^\*/) || branch == 'master'
+    end
+  end
+
+  def current_branch
+    merged_branches.find do |branch|
+      branch.match(/^\*/)
+    end.gsub(/\*\s*/, '')
+  end
+
+  def ask(question)
+    puts "#{question} [Y/n]"
+    answer = gets.chomp
+    unless %w(n y).include?(answer.downcase)
+      puts 'Invalid response (Y/n accepted)'
+      raise ArgumentError, "Invalid argument #{answer}"
+    end
+    answer.downcase == 'y'
+  end
+end
+
+GitPBS.new
