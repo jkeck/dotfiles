@@ -8,6 +8,7 @@ class GitPBS
       puts 'No merged branches to delete!'
     else
       check_master_branch
+      puts "#{omit_branches.size} branches found that have been merged into #{current_branch}."
       omit_branches.each do |branch|
         ask_to_delete_branch(branch)
       end
