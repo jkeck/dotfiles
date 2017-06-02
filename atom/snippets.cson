@@ -30,6 +30,9 @@
   'require':
     'prefix': 'req'
     'body': "require '$1'"
+  'Frozen String Literal':
+    'prefix': 'frozen'
+    'body': "# frozen_string_literal: true"
   'RSpec Context':
     'prefix': 'cont'
     'body': """
