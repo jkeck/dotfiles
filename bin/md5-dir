@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Return an md5 hash of all the contents of a directory
+#   Examples:
+#     md5-dir ./data/xml # Hashes all files within the directory
+#     md5-dir ./data/xml .xml # Only hashed .xml files within the directory
+#
+# Arguments:
+#  1. Directory to search in (will search recursively)
+#  2. File extensions to include in the md5 (defaults to all files)
+
+find $1 -type f -name "*$2" -exec md5 {} + | awk '{print $4}' | sort | md5
