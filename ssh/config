@@ -2,4 +2,7 @@ Host corn cardinal *.stanford.edu
  GSSAPIAuthentication yes
  GSSAPIDelegateCredentials yes
 Host *
+  AddKeysToAgent yes
   UseKeychain yes
+  IdentityFile ~/.ssh/id_rsa
+
