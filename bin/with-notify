@@ -1,0 +1,59 @@
+#!/usr/bin/ruby
+
+class WithNotify
+  attr_reader :command
+  def initialize(args = ARGV)
+    @command = args.join(' ')
+  end
+
+  def self.run
+    new.run
+  end
+
+  def run
+    puts "Running \"#{command}\" with notifications..."
+
+    run_command
+
+    if $?.exitstatus.zero?
+      `#{notify_command('Command Successful!')}`
+    else
+      `#{notify_command('Command Failed!')}`
+    end
+  end
+
+  private
+
+  def run_command
+    IO.popen(command) do |io|
+      while (line = io.gets)
+        puts line
+      end
+    end
+  rescue => error
+    puts error
+  end
+
+  def notify_command(title)
+    "#{executable} #{flags.join(' ')} '#{script_command} \"#{command} #{from_dir}\" with title \"#{title}\"'"
+  end
+
+  def from_dir
+    dir = `pwd`.chomp.scan(%r{.*\/(.*)$}).flatten.first
+    "(from \\\"#{dir}\\\")"
+  end
+
+  def script_command
+    'display notification'
+  end
+
+  def flags
+    ['-e']
+  end
+
+  def executable
+    'osascript'
+  end
+end
+
+WithNotify.run

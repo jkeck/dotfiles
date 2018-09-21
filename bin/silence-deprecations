@@ -1,0 +1,40 @@
+#!/usr/bin/ruby
+
+class SilenceDeprecations
+  def initialize(file_path)
+    @file_path = file_path
+  end
+
+  def self.run(file_path)
+    new(file_path).run
+  end
+
+  def run
+    if inlcudes_silenced_line?
+      puts "Deprecations already silenced in #{file_path}"
+      return
+    end
+
+    file.write(silence_ruby_line)
+    file.close
+    puts "Deprecations silenced for #{file_path}"
+  end
+
+  private
+
+  attr_reader :file_path
+
+  def file
+    @file ||= File.open(file_path, 'a+')
+  end
+
+  def inlcudes_silenced_line?
+    file.read.include? silence_ruby_line
+  end
+
+  def silence_ruby_line
+    'ActiveSupport::Deprecation.silenced = true'
+  end
+end
+
+SilenceDeprecations.run(ARGV[0])
