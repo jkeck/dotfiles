@@ -43,6 +43,20 @@
       MyComponent.propTypes = {};
       MyComponent.defaultProps = {};
     """
+  'jestDescribe':
+    'prefix': 'desc'
+    'body': """
+      describe('$1', () => {
+        $2
+      });$3
+    """
+  'jestIt':
+    'prefix': 'it'
+    'body': """
+      it('$1', () => {
+        $2
+      });$3
+    """
 '.source.ruby':
   'initialize':
     'prefix': 'init'
