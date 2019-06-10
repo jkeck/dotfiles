@@ -27,21 +27,63 @@
       import PropTypes from 'prop-types';
 
       /**
-       * MyComponent ~
+       * $1MyComponent ~
       */
-      export default class MyComponent extends Component {
+      export default class $2MyComponent extends Component {
         /**
          * Returns the rendered component
         */
         render() {
           return (
-            <></>
+            <>$5</>
           );
         }
       }
 
-      MyComponent.propTypes = {};
-      MyComponent.defaultProps = {};
+      $3MyComponent.propTypes = {};
+      $4MyComponent.defaultProps = {};
+    """
+  'newFunctionalComponent':
+    'prefix': 'newFuncComp',
+    'body': """
+      import React from 'react';
+      import PropTypes from 'prop-types';
+
+      /**
+       * $1MyComponent ~
+      */
+      export default function $2MyComponent(props) {
+        return (
+          <>$5</>
+        );
+      }
+
+      $3MyComponent.propTypes = {};
+      $4MyComponent.defaultProps = {};
+    """
+  'newEnzymeTest':
+    'prefix': 'newEnzyme'
+    'body': """
+      import React from 'react';
+      import { shallow } from 'enzyme';
+      import { $1 } from '../../../src/components/$2';
+
+      /** Utility function to wrap $3 */
+      function createWrapper(props) {
+        return shallow(
+          <$4
+            {...props}
+          />,
+        );
+      }
+
+      describe('$5', () => {
+        let wrapper;
+
+        it('$6does something', () => {
+          wrapper = createWrapper();
+        });
+      });
     """
   'jestDescribe':
     'prefix': 'desc'
