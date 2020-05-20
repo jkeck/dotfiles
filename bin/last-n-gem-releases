@@ -1,0 +1,77 @@
+#!/Users/jkeck/.rbenv/shims/ruby
+
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'gems'
+end
+
+##
+# Return given number of releases for a particular gem
+#
+# last-n-gem-releases --name rails # will return the last 5 releases and dates
+# last-n-gem-releases --name rails --releases 10 # will return the last 10 releases and dates
+class LastNGemReleases
+  attr_reader :name, :releases
+  def initialize(args)
+    @name = args[:name]
+    @releases = (args[:releases] || 5).to_i
+
+    raise ArgumentError unless @name
+  end
+
+  def versions
+    _versions.take(releases).map do |v|
+      Version.new(v)
+    end
+  end
+
+  def to_s
+    <<~STRING
+      Displaying #{releases} of #{_versions.count} for gem #{name}
+
+      #{versions.map(&:to_s).join("\n")}
+    STRING
+  end
+
+  private
+
+  def _versions
+    @_versions ||= Gems.versions(name)
+  end
+
+  ##
+  # Wrapper class around gem version data
+  class Version
+    attr_reader :version
+    def initialize(version)
+      @version = version
+    end
+
+    def number
+      version['number']
+    end
+
+    def created
+      DateTime.parse(version['created_at']).strftime('%Y-%m-%d %I:%M:%S %p')
+    end
+
+    def to_s
+      "#{number}\t#{created}"
+    end
+
+    def inspect
+      "<LastNGemReleases::Version #{self}>"
+    end
+  end
+end
+
+args = {}
+
+ARGV.each_slice(2) do |flag, value|
+  args[flag.sub(/-+/, '').to_sym] = value
+end
+
+puts LastNGemReleases.new(**args).to_s
