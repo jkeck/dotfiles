@@ -101,3 +101,6 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 export PATH="/usr/local/opt/ant@1.9/bin:$PATH"
+
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
