@@ -12,7 +12,7 @@
   name = Jessie Keck
   email = jessie.keck@gmail.com
 [core]
-  editor = mate -w
+  editor = atom --wait
   excludesfile = /Users/jkeck/.gitignore_global
 [credential]
   helper = osxkeychain
