@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if git show-ref refs/heads/main | grep -q 'refs/heads/main'
+then
+  echo 'main'
+else
+  echo 'master'
+fi

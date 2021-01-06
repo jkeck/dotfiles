@@ -3,11 +3,12 @@
   bm = branch --merged
   cam = commit --amend
   cm = commit -m
+  com = "!f(){ git checkout $(main_or_master); };f"
   pp = pull --prune
   pot = push -u origin
   fp = fetch --prune
   ri = rebase -i
-  rim = rebase -i master
+  rim = "!f(){ git rebase -i $(main_or_master); };f"
 [user]
   name = Jessie Keck
   email = jessie.keck@gmail.com
