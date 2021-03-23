@@ -7,6 +7,7 @@
   pp = pull --prune
   pot = push -u origin
   fp = fetch --prune
+  rbm = "!f(){ git rebase $(main_or_master); };f"
   ri = rebase -i
   rim = "!f(){ git rebase -i $(main_or_master); };f"
 [user]
