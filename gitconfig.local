@@ -18,3 +18,5 @@
   excludesfile = /Users/jkeck/.gitignore_global
 [credential]
   helper = osxkeychain
+[pull]
+	ff = only
